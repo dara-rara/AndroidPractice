@@ -6,12 +6,11 @@ plugins {
 
 android {
     namespace = "ru.urfu.glebova"
-    compileSdk = 34
-
+    compileSdk = 36
     defaultConfig {
         applicationId = "ru.urfu.glebova"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 26
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -37,6 +36,7 @@ android {
     buildFeatures {
         compose = true
     }
+    buildToolsVersion = "35.0.0"
 }
 
 dependencies {
@@ -49,6 +49,12 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.coil.compose)
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation("com.google.accompanist:accompanist-placeholder:0.34.0")
+    implementation(libs.androidx.room.runtime.android)
+    implementation(libs.androidx.foundation.layout.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -56,4 +62,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Navigation
+    implementation(libs.bundles.navigation3)
+    implementation(libs.kotlinx.serialization.core)
+
+    // DI
+    implementation(libs.bundles.koin)
 }
