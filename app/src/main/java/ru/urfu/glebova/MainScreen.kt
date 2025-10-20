@@ -76,7 +76,7 @@ fun MainScreen() {
             ),
             entryProvider = entryProvider {
                 entry<Characters> {
-                    CharactersListScreen(topLevelBackStack)
+                    CharactersListScreen()
                 }
                 entry<Locations> {
                     ContentGreen("Locations") {

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidPractice</string>
+    <string name="error_occured">Ошибка!</string>
 </resources>
