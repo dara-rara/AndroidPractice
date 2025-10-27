@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -49,10 +50,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.material.icons.core)
     implementation(libs.coil.compose)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
-    implementation("com.google.accompanist:accompanist-placeholder:0.34.0")
+    implementation(libs.accompanist.placeholder)
     implementation(libs.androidx.room.runtime.android)
     implementation(libs.androidx.foundation.layout.android)
     testImplementation(libs.junit)
@@ -69,4 +71,11 @@ dependencies {
 
     // DI
     implementation(libs.bundles.koin)
+
+    // network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.serialization)
+    implementation(libs.kotlinx.serialization.json)
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.no.op)
 }
