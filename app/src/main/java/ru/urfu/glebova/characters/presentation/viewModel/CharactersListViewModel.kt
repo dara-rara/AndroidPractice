@@ -4,33 +4,56 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import ru.urfu.glebova.CharactersDetails
+import ru.urfu.glebova.CharactersFilter
+import ru.urfu.glebova.characters.data.badge.Badge
 import ru.urfu.glebova.characters.domain.interactor.CharactersInteractor
-import ru.urfu.glebova.characters.domain.model.CharacterEntity
+import ru.urfu.glebova.characters.presentation.mapper.CharacterEntityToModelListMapper
 import ru.urfu.glebova.characters.presentation.model.CharacterUiModel
+import ru.urfu.glebova.characters.presentation.model.CharactersListFilter
 import ru.urfu.glebova.characters.presentation.model.CharactersListViewState
 import ru.urfu.glebova.core.launchLoadingAndError
 import ru.urfu.glebova.navigation.Route
 import ru.urfu.glebova.navigation.TopLevelBackStack
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class CharactersListViewModel(
     private val topLevelBackStack: TopLevelBackStack<Route>,
     private val interactor: CharactersInteractor,
+    private val mapper: CharacterEntityToModelListMapper,
+    private val badge: Badge,
 ) : ViewModel() {
     private val mutableState = MutableStateFlow(CharactersListViewState())
     val viewState = mutableState.asStateFlow()
 
     init {
         loadCharacters()
+        viewModelScope.launch {
+            interactor.updateGenderFilter().collect { currentFilter ->
+                val shouldShowBadge = currentFilter.isNotEmpty()
+                badge.setFiltersActive(shouldShowBadge)
+            }
+        }
     }
 
     fun onRetryClick() = loadCharacters()
 
+    fun onSettingsClick() = topLevelBackStack.add(CharactersFilter)
+
     fun onCharactersClick(character: CharacterUiModel) {
         topLevelBackStack.add(CharactersDetails(character))
+    }
+
+    fun onFilterChange(filter: CharactersListFilter) {
+        mutableState.update { it.copy(currentFilter = filter) }
+        loadCharacters()
+    }
+
+    fun shouldShowBadge(): Boolean {
+        return badge.hasActiveFilters()
     }
 
     private fun loadCharacters() {
@@ -41,44 +64,20 @@ class CharactersListViewModel(
         ) {
             updateState(CharactersListViewState.State.Loading)
 
-            val characters = interactor.getCharacters()
-            updateState(CharactersListViewState.State.Success(mapToUi(characters)))
+            interactor.updateGenderFilter()
+                .onEach { updateState(CharactersListViewState.State.Loading) }
+                .map {
+                    if (viewState.value.currentFilter == CharactersListFilter.ALL){
+                        interactor.getCharacters(it)
+                    } else {
+                        interactor.getFavorites()
+                    }
+                }
+                .collect { updateState(CharactersListViewState.State.Success(mapper.mapToUi(it))) }
+
         }
     }
 
     private fun updateState(state: CharactersListViewState.State) =
         mutableState.update { it.copy(state = state) }
-
-    private fun mapToUi(characters: List<CharacterEntity>): List<CharacterUiModel> =
-        characters.map { character ->
-            CharacterUiModel(
-                id = character.id,
-                name = character.name,
-                status = character.status,
-                species = character.species,
-                type = character.type,
-                gender = character.gender,
-                origin = CharacterUiModel.Origin(
-                    name = character.origin.name,
-                    url = character.origin.url
-                ),
-                location = CharacterUiModel.Location(
-                    name = character.location.name,
-                    url = character.location.url
-                ),
-                image = character.image,
-                episode = character.episode,
-                url = character.url,
-                created = formatDateTime(character.created)
-            )
-        }
-
-    private fun formatDateTime(dateTime: LocalDateTime): String {
-        return try {
-            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
-            dateTime.format(formatter)
-        } catch (e: Exception) {
-            "Неизвестная дата"
-        }
-    }
 }

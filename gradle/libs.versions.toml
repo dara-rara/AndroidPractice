@@ -1,5 +1,6 @@
 [versions]
 agp = "8.13.0"
+datastore = "1.1.7"
 kotlin = "2.2.20"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -11,6 +12,8 @@ composeBom = "2025.09.01"
 coilCompose = "2.7.0"
 kotlinSerialization = "2.2.0"
 kotlinxSerializationCore = "1.9.0"
+preferenceKtx = "1.2.1"
+room = "2.8.3"
 roomRuntimeAndroid = "2.8.2"
 koinAndroid = "4.1.1"
 nav3Core = "1.0.0-alpha10"
@@ -20,9 +23,17 @@ materialIconsCore = "1.7.3"
 accompanist = "0.34.0"
 retrofit = "3.0.0"
 chucker = "4.2.0"
+ksp = "2.2.0-2.0.2"
+datastorePreferencesCore = "1.1.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-runtime = {module = "androidx.room:room-runtime", version.ref = "room"}
+room-ktx = {module = "androidx.room:room-ktx", version.ref = "room"}
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -56,12 +67,14 @@ androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", vers
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
+androidx-datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastorePreferencesCore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [bundles]
 navigation3 = [

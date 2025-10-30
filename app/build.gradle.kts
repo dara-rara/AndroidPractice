@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -57,6 +58,7 @@ dependencies {
     implementation(libs.accompanist.placeholder)
     implementation(libs.androidx.room.runtime.android)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.datastore.preferences.core)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,4 +80,13 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.no.op)
+
+    //db
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.room.ktx)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
 }
