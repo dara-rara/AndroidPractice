@@ -8,6 +8,7 @@ import ru.urfu.glebova.characters.di.charactersFeatureModule
 import ru.urfu.glebova.di.databaseModule
 import ru.urfu.glebova.di.mainModule
 import ru.urfu.glebova.di.networkModule
+import ru.urfu.glebova.profile.data.di.profileFeatureModule
 
 class App: Application() {
     override fun onCreate() {
@@ -15,7 +16,9 @@ class App: Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(mainModule, charactersFeatureModule, networkModule, databaseModule)
+            modules(mainModule, charactersFeatureModule, networkModule, databaseModule,
+                profileFeatureModule
+            )
         }
     }
 }
