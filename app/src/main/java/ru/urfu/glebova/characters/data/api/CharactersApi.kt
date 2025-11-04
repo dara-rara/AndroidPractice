@@ -8,10 +8,6 @@ interface CharactersApi {
 
     @GET("character")
     suspend fun getCharacters(
-        @Query("status") orderBy: String = STATUS_ASC
+        @Query("gender") gender: String? = null
     ): CharactersListResponse
-
-    companion object {
-        private const val STATUS_ASC = "alive"
-    }
 }

@@ -54,8 +54,7 @@ fun CharactersDetailsDialog(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ModalBottomSheet(
-        onDismissRequest = viewModel::onBack,
-        modifier = Modifier.fillMaxWidth(),
+        onDismissRequest = { viewModel.onBack() },
     ) {
         CharacterDetailsContent(state, viewModel::onLikeChanged)
     }

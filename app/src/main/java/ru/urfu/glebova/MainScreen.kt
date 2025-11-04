@@ -26,6 +26,7 @@ import androidx.navigation3.ui.NavDisplay
 import org.koin.java.KoinJavaComponent.inject
 import ru.urfu.glebova.characters.presentation.model.CharacterUiModel
 import ru.urfu.glebova.characters.presentation.screen.CharactersDetailsDialog
+import ru.urfu.glebova.characters.presentation.screen.CharactersFilterDialog
 import ru.urfu.glebova.characters.presentation.screen.CharactersListScreen
 import ru.urfu.glebova.navigation.Route
 import ru.urfu.glebova.navigation.TopLevelBackStack
@@ -44,6 +45,7 @@ data object Locations : TopLevelRoute {
 }
 
 data class CharactersDetails(val character: CharacterUiModel) : Route
+data object CharactersFilter : Route
 
 @Composable
 fun MainScreen() {
@@ -86,6 +88,12 @@ fun MainScreen() {
                 entry<CharactersDetails> {
                     with(DialogSceneStrategy.dialog(DialogProperties())) {
                         CharactersDetailsDialog(character = it.character)
+                    }
+                }
+
+                entry<CharactersFilter> {
+                    with(DialogSceneStrategy.dialog(DialogProperties())) {
+                        CharactersFilterDialog()
                     }
                 }
             }
