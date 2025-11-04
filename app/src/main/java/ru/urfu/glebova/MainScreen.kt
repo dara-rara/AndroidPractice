@@ -1,21 +1,17 @@
 package ru.urfu.glebova
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -30,22 +26,25 @@ import ru.urfu.glebova.characters.presentation.screen.CharactersFilterDialog
 import ru.urfu.glebova.characters.presentation.screen.CharactersListScreen
 import ru.urfu.glebova.navigation.Route
 import ru.urfu.glebova.navigation.TopLevelBackStack
-
+import ru.urfu.glebova.profile.presentation.screen.EditProfileScreen
+import ru.urfu.glebova.profile.presentation.screen.ProfileScreen
 
 interface TopLevelRoute : Route {
     val icon: ImageVector
 }
 
 data object Characters : TopLevelRoute {
-    override val icon = Icons.Default.Face
-}
-
-data object Locations : TopLevelRoute {
-    override val icon = Icons.Default.LocationOn
+    override val icon = Icons.Default.Menu
 }
 
 data class CharactersDetails(val character: CharacterUiModel) : Route
 data object CharactersFilter : Route
+
+data object Profile : TopLevelRoute {
+    override val icon = Icons.Default.Person // Иконка профиля
+}
+
+data object EditProfile : Route
 
 @Composable
 fun MainScreen() {
@@ -56,7 +55,7 @@ fun MainScreen() {
 
     Scaffold(bottomBar = {
         NavigationBar {
-            listOf(Characters, Locations).forEach { route ->
+            listOf(Characters, Profile).forEach { route ->
                 NavigationBarItem(
                     icon = { Icon(route.icon, null) },
                     selected = topLevelBackStack.topLevelKey == route,
@@ -80,34 +79,25 @@ fun MainScreen() {
                 entry<Characters> {
                     CharactersListScreen()
                 }
-                entry<Locations> {
-                    ContentGreen("Locations") {
-                        Text("Locations screen coming soon...")
-                    }
-                }
                 entry<CharactersDetails> {
                     with(DialogSceneStrategy.dialog(DialogProperties())) {
                         CharactersDetailsDialog(character = it.character)
                     }
                 }
-
                 entry<CharactersFilter> {
                     with(DialogSceneStrategy.dialog(DialogProperties())) {
                         CharactersFilterDialog()
                     }
                 }
+
+                entry<Profile> {
+                    ProfileScreen()
+                }
+
+                entry<EditProfile> {
+                    EditProfileScreen()
+                }
             }
         )
-    }
-}
-@Composable
-fun ContentGreen(text: String, content: @Composable () -> Unit) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(Color.Green)
-    ) {
-        Text(text)
-        content()
     }
 }

@@ -8,14 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 import ru.urfu.glebova.characters.data.api.CharactersApi
 import ru.urfu.glebova.characters.data.db.CharactersDatabase
-import ru.urfu.glebova.characters.data.entity.CharactersDbEntity
 import ru.urfu.glebova.characters.data.mapper.CharacterDbMapper
 import ru.urfu.glebova.characters.data.mapper.CharactersResponseToEntityMapper
-import ru.urfu.glebova.characters.data.model.Location
-import ru.urfu.glebova.characters.data.model.Origin
 import ru.urfu.glebova.characters.domain.model.CharacterEntity
 
 class CharactersRepository(

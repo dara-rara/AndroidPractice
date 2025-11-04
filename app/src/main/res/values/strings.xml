@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">AndroidPractice</string>
     <string name="error_occured">Ошибка!</string>
+    <string name="profile">Профиль</string>
+    <string name="edit_profile">Редактирование</string>
+    <string name="portfolio">Портфолио</string>
+    <string name="portfolio_true">Портфолио доступно</string>
+    <string name="portfolio_false">Ссылка на портфолио не указана</string>
+    <string name="portfolio_load">Скачать портфолио</string>
+    <string name="portfolio_add">Добавьте портфолио</string>
+    <string name="portfolio_edit">Нажмите редактировать чтобы добавить ссылку</string>
+    <string name="name">Имя</string>
+    <string name="name_empty">Имя не указано</string>
+    <string name="link">Ссылка</string>
+    <string name="source">Выберите источник фото</string>
+    <string name="camera">Сделать фото</string>
+    <string name="gallery">Выбрать из галереи</string>
 </resources>
